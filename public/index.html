@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biffboff</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+  <div id="app">
+    <header class="border-b border-gray-700 px-6 py-4">
+      <h1 class="text-xl font-semibold">Biffboff</h1>
+    </header>
+
+    <main class="flex h-[calc(100vh-65px)]">
+      <!-- Kanban Board -->
+      <div id="board" class="flex-1 flex gap-4 p-6 overflow-x-auto">
+        <!-- Columns injected by JS -->
+      </div>
+
+      <!-- Task Panel (sliding) -->
+      <aside id="panel" class="w-[400px] border-l border-gray-700 bg-gray-800 transform translate-x-full transition-transform duration-200 fixed right-0 top-[65px] bottom-0 overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 id="panel-title" class="text-lg font-semibold"></h2>
+            <button id="panel-close" class="text-gray-400 hover:text-white">&times;</button>
+          </div>
+          <div id="panel-content"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
