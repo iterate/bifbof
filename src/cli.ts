@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { parseArgs } from "util";
-import { loadConfig } from "./config";
-import { createServer } from "./server";
+import { loadConfig } from "../server/config";
+import { createServer } from "../server/index";
 
 const { values } = parseArgs({
   args: Bun.argv,

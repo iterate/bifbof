@@ -1,4 +1,4 @@
-import { defineConfig } from "./src/types";
+import { defineConfig } from "./server/types";
 
 export default defineConfig({
   tasksDir: "./tasks",

@@ -1,7 +1,22 @@
 import { watch } from "fs";
-import { relative } from "path";
+import { relative, join } from "path";
 import { parseTask } from "./parser";
 import type { Task, BifbofConfig } from "./types";
+
+function taskToMarkdown(task: Task): string {
+  const lines: string[] = ["---"];
+  if (task.id) lines.push(`id: ${task.id}`);
+  lines.push(`status: ${task.status}`);
+  if (task.dependencies.length > 0) {
+    lines.push("dependsOn:");
+    task.dependencies.forEach((dep) => lines.push(`  - ${dep}`));
+  }
+  lines.push("---", "", `# ${task.title}`);
+  if (task.description) {
+    lines.push("", task.description);
+  }
+  return lines.join("\n");
+}
 
 export class TaskStore {
   private tasks = new Map<string, Task>();
@@ -53,6 +68,37 @@ export class TaskStore {
   onChange(fn: (tasks: Task[]) => void): () => void {
     this.listeners.add(fn);
     return () => this.listeners.delete(fn);
+  }
+
+  async create(task: Omit<Task, "id"> & { id?: string }): Promise<Task> {
+    const id = task.id || `task-${Date.now()}`;
+    const newTask: Task = {
+      id,
+      title: task.title,
+      description: task.description,
+      dependencies: task.dependencies,
+      status: task.status,
+    };
+
+    const filepath = join(this.config.tasksDir, `${id}.md`);
+    await Bun.write(filepath, taskToMarkdown(newTask));
+
+    this.tasks.set(id, newTask);
+    this.notify();
+    return newTask;
+  }
+
+  async update(id: string, updates: Partial<Task>): Promise<Task | null> {
+    const existing = this.tasks.get(id);
+    if (!existing) return null;
+
+    const updated: Task = { ...existing, ...updates, id };
+    const filepath = join(this.config.tasksDir, `${id}.md`);
+    await Bun.write(filepath, taskToMarkdown(updated));
+
+    this.tasks.set(id, updated);
+    this.notify();
+    return updated;
   }
 
   private notify(): void {
