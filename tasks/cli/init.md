@@ -1,8 +1,8 @@
 ---
 id: cli/init
-status: backlog
+status: done
 dependsOn:
-  - cli/init
+  - cli/help
 ---
 
 # cli/init
