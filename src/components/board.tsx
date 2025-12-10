@@ -9,7 +9,7 @@ interface Props {
 
 export function Board({ columns, tasks, onSelectTask }: Props) {
   return (
-    <div className="flex-1 flex gap-4 p-6 overflow-x-auto">
+    <div className="flex-1 flex gap-6 p-8 bg-[#fafaf4]">
       {columns.map((column) => (
         <Column
           key={column}

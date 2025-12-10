@@ -31,9 +31,9 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
-      <header className="border-b border-gray-700 px-6 h-16 flex items-center">
-        <h1 className="text-xl font-semibold">Bifbof</h1>
+    <div className="min-h-screen flex flex-col bg-[#fffff8] text-[#111] font-serif">
+      <header className="px-8 py-5 border-b border-[#e8e8e0]">
+        <h1 className="text-lg font-normal tracking-tight">bifbof</h1>
       </header>
 
       <main className="flex-1 flex overflow-hidden">

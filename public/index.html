@@ -3,23 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bifbof</title>
-  <link rel="stylesheet" href="./styles.css">
-  
-  <!-- Import map - tells browser where to find React (loaded from CDN) -->
-  <script type="importmap">
-  {
-    "imports": {
-      "react": "https://esm.sh/react@19",
-      "react/": "https://esm.sh/react@19/",
-      "react-dom/client": "https://esm.sh/react-dom@19/client",
-      "react/jsx-runtime": "https://esm.sh/react@19/jsx-runtime"
-    }
-  }
-  </script>
+  <title>bifbof</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Source+Sans+3:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="tailwindcss">
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body>
   <div id="root"></div>
-  <script type="module" src="./main.tsx"></script>
+  <script type="module" src="../src/main.tsx"></script>
 </body>
 </html>
