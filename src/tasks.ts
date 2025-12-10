@@ -1,6 +1,5 @@
 import { watch } from "fs";
-import { readdir } from "fs/promises";
-import { join, relative } from "path";
+import { relative } from "path";
 import { parseTask } from "./parser";
 import type { Task, BifbofConfig } from "./types";
 
@@ -12,9 +11,9 @@ export class TaskStore {
 
   async load(): Promise<void> {
     this.tasks.clear();
-    const files = await this.findMarkdownFiles(this.config.tasksDir);
+    const glob = new Bun.Glob("**/*.md");
 
-    for (const filepath of files) {
+    for await (const filepath of glob.scan({ cwd: this.config.tasksDir, absolute: true })) {
       try {
         const content = await Bun.file(filepath).text();
         const relativePath = relative(this.config.tasksDir, filepath);
@@ -28,25 +27,6 @@ export class TaskStore {
     console.log(`Loaded ${this.tasks.size} tasks`);
   }
 
-  private async findMarkdownFiles(dir: string): Promise<string[]> {
-    const results: string[] = [];
-
-    async function walk(currentDir: string) {
-      const entries = await readdir(currentDir, { withFileTypes: true });
-      for (const entry of entries) {
-        const fullPath = join(currentDir, entry.name);
-        if (entry.isDirectory()) {
-          await walk(fullPath);
-        } else if (entry.name.endsWith(".md")) {
-          results.push(fullPath);
-        }
-      }
-    }
-
-    await walk(dir);
-    return results;
-  }
-
   getAll(): Task[] {
     return Array.from(this.tasks.values());
   }
@@ -57,12 +37,10 @@ export class TaskStore {
 
   watch(): void {
     console.log(`Watching ${this.config.tasksDir} for changes...`);
-
     let debounce: Timer | null = null;
 
-    watch(this.config.tasksDir, { recursive: true }, (event, filename) => {
+    watch(this.config.tasksDir, { recursive: true }, (_, filename) => {
       if (!filename?.endsWith(".md")) return;
-
       if (debounce) clearTimeout(debounce);
       debounce = setTimeout(async () => {
         console.log(`File changed: ${filename}`);
