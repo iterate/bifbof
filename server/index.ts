@@ -66,8 +66,13 @@ export async function createServer(config: BifbofConfig) {
     },
 
     fetch(req, server) {
-      if (new URL(req.url).pathname === "/ws") {
+      const pathname = new URL(req.url).pathname;
+      if (pathname === "/ws") {
         return server.upgrade(req) ? undefined : new Response("Upgrade failed", { status: 400 });
+      }
+      // Let Bun handle its internal routes (HMR, source maps, error reporting)
+      if (pathname.startsWith("/_bun/")) {
+        return undefined;
       }
     },
 
