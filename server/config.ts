@@ -1,14 +1,18 @@
-import { resolve, join } from "path";
+import { resolve, join, dirname } from "path";
 import { defineConfig, type BifbofConfig } from "./types";
 
 const CONFIG_FILES = ["bifbof.config.ts", "bifbof.config.js"] as const;
 
-async function findConfig(cwd: string): Promise<string | null> {
+export async function findConfig(cwd: string): Promise<string | null> {
   for (const filename of CONFIG_FILES) {
     const filepath = join(cwd, filename);
     if (await Bun.file(filepath).exists()) return filepath;
   }
   return null;
+}
+
+export async function configExists(): Promise<boolean> {
+  return (await findConfig(process.cwd())) !== null;
 }
 
 export async function loadConfig(customPath?: string): Promise<BifbofConfig> {
@@ -25,5 +29,12 @@ export async function loadConfig(customPath?: string): Promise<BifbofConfig> {
 
   console.log(`Loading config from ${configPath}`);
   const mod = await import(configPath);
-  return defineConfig(mod.default ?? mod);
+  const config = defineConfig(mod.default ?? mod);
+
+  // Resolve tasksDir relative to config file location
+  const configDir = dirname(configPath);
+  return {
+    ...config,
+    tasksDir: resolve(configDir, config.tasksDir),
+  };
 }

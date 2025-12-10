@@ -1,7 +1,9 @@
 import { watch } from "fs";
-import { relative, join } from "path";
+import { relative, join, basename } from "path";
 import { parseTask } from "./parser";
 import type { Task, BifbofConfig } from "./types";
+
+const EXCLUDED_FILES = /^(AGENTS|CLAUDE|README)\.md$/i;
 
 function taskToMarkdown(task: Task): string {
   const lines: string[] = ["---"];
@@ -29,6 +31,9 @@ export class TaskStore {
     const glob = new Bun.Glob("**/*.md");
 
     for await (const filepath of glob.scan({ cwd: this.config.tasksDir, absolute: true })) {
+      const filename = basename(filepath);
+      if (EXCLUDED_FILES.test(filename)) continue;
+
       try {
         const content = await Bun.file(filepath).text();
         const relativePath = relative(this.config.tasksDir, filepath);

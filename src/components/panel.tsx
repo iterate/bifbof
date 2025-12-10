@@ -13,7 +13,6 @@ export function Panel({ task, columns, onClose, onSave }: Props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
-  throw new Error("Not implemented");
   useEffect(() => {
     if (task) {
       setTitle(task.title);

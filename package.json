@@ -1,8 +1,8 @@
 {
   "name": "bifbof",
-  "version": "0.1.0",
-  "description": "Git-first task management CLI with a local Kanban board",
-  "author": "Iterate <hello@iterate.no>",
+  "version": "0.1.1",
+  "description": "Git-first linear clone",
+  "author": "Jonas Templestein",
   "license": "MIT",
   "repository": {
     "type": "git",
