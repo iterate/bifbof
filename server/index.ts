@@ -3,7 +3,6 @@ import index from "../public/index.html";
 import { TaskStore } from "./tasks";
 import type { BifbofConfig } from "./types";
 
-// Track connected WebSocket clients
 const clients = new Set<ServerWebSocket<unknown>>();
 
 export async function createServer(config: BifbofConfig) {
@@ -11,50 +10,33 @@ export async function createServer(config: BifbofConfig) {
   await store.load();
   store.watch();
 
-  // Notify all clients on task changes
   store.onChange((tasks) => {
-    const message = JSON.stringify({ type: "tasks", data: tasks });
-    clients.forEach((ws) => ws.send(message));
+    const msg = JSON.stringify({ type: "tasks", data: tasks });
+    clients.forEach((ws) => ws.send(msg));
   });
 
   const server = serve({
     port: config.port,
+    development: process.env.NODE_ENV !== "production",
 
     routes: {
-      // API routes
-      "/api/config": {
-        GET: () => Response.json({ columns: config.columns }),
-      },
-
-      "/api/tasks": {
-        GET: () => Response.json(store.getAll()),
-      },
-
+      "/api/config": { GET: () => Response.json({ columns: config.columns }) },
+      "/api/tasks": { GET: () => Response.json(store.getAll()) },
       "/api/tasks/:id": {
         GET: (req) => {
           const task = store.get(req.params.id);
-          if (!task) {
-            return Response.json({ error: "Task not found" }, { status: 404 });
-          }
-          return Response.json(task);
+          return task
+            ? Response.json(task)
+            : Response.json({ error: "Not found" }, { status: 404 });
         },
       },
-
-      // React SPA (catch-all)
       "/*": index,
     },
 
-    // WebSocket handling via fetch for /ws route
     fetch(req, server) {
-      const url = new URL(req.url);
-      if (url.pathname === "/ws") {
-        if (server.upgrade(req)) {
-          return undefined;
-        }
-        return new Response("WebSocket upgrade failed", { status: 400 });
+      if (new URL(req.url).pathname === "/ws") {
+        return server.upgrade(req) ? undefined : new Response("Upgrade failed", { status: 400 });
       }
-      // Let routes handle everything else
-      return undefined;
     },
 
     websocket: {
@@ -65,15 +47,6 @@ export async function createServer(config: BifbofConfig) {
       close(ws) {
         clients.delete(ws);
       },
-      message() {
-        // Handle incoming messages if needed
-      },
-    },
-
-    // Development mode - enables HMR and source maps
-    development: process.env.NODE_ENV !== "production" && {
-      hmr: true,
-      console: true,
     },
   });
 
