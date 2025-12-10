@@ -2,7 +2,7 @@
 title: Set up error tracking
 status: todo
 priority: medium
-depends:
+dependsOn:
   - setup-db
 ---
 

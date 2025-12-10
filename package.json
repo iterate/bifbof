@@ -1,6 +1,18 @@
 {
   "name": "bifbof",
   "version": "0.1.0",
+  "description": "Git-first task management CLI with a local Kanban board",
+  "author": "Iterate <hello@iterate.no>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iterate/bifbof.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iterate/bifbof/issues"
+  },
+  "homepage": "https://github.com/iterate/bifbof#readme",
+  "keywords": ["cli", "tasks", "kanban", "git", "project-management"],
   "type": "module",
   "bin": {
     "bifbof": "./src/cli.ts"

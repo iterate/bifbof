@@ -93,7 +93,7 @@ More content.`);
 
   test("parses dependencies from frontmatter", () => {
     const content = `---
-depends:
+dependsOn:
   - task-a
   - task-b
 ---
@@ -150,7 +150,7 @@ Description after title.
     const content = `---
 id: only-frontmatter
 title: Only Frontmatter
-depends:
+dependsOn:
   - dep1
 ---
 `;
@@ -198,7 +198,7 @@ Description.
 id: auth-login
 title: Implement Login
 status: in-progress
-depends:
+dependsOn:
   - setup-db
   - auth-config
 ---

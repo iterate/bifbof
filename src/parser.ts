@@ -4,7 +4,7 @@ interface Frontmatter {
   id?: string;
   title?: string;
   status?: string;
-  depends?: string[];
+  dependsOn?: string[];
 }
 
 /**
@@ -77,7 +77,7 @@ function parseFrontmatter(content: string): { attributes: Frontmatter; body: str
  * ID: from frontmatter `id` field, or relative path without .md extension
  * Title: from frontmatter `title` field, or first # heading, or same as id
  * Description: everything after the first # heading line (or entire body if no heading)
- * Dependencies: from frontmatter `depends` field
+ * Dependencies: from frontmatter `dependsOn` field
  * Status: from frontmatter `status` field, defaults to "backlog"
  */
 export function parseTask(relativePath: string, content: string, defaultStatus = "backlog"): Task {
@@ -116,7 +116,7 @@ export function parseTask(relativePath: string, content: string, defaultStatus =
     .trim();
 
   // Dependencies from frontmatter
-  const dependencies = attributes.depends ?? [];
+  const dependencies = attributes.dependsOn ?? [];
 
   // Status from frontmatter, default to defaultStatus
   const status = attributes.status ?? defaultStatus;

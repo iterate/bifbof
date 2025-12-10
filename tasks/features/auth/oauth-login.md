@@ -1,7 +1,7 @@
 ---
 status: in-progress
 priority: high
-depends:
+dependsOn:
   - setup-db
 assignee: jonas
 ---

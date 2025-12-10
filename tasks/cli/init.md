@@ -1,5 +1,5 @@
 ---
-depends:
+dependsOn:
   - cli/init
 ---
 This command should just create a config file, a folder, a couple of example tasks, and then run bifbof server. That's it. Oh, and it should also create an AGENTS.md file to explain to Coding Agents what the hell this thing is.
