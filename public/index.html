@@ -4,33 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bifbof</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
-  <div id="app">
-    <header>
-      <h1>Bifbof</h1>
-    </header>
-
-    <main>
-      <!-- Kanban Board -->
-      <div id="board">
-        <!-- Columns injected by JS -->
-      </div>
-
-      <!-- Task Panel (sliding) -->
-      <aside id="panel">
-        <div class="panel__content">
-          <div class="panel__header">
-            <h2 id="panel-title" class="panel__title"></h2>
-            <button id="panel-close" class="panel__close">&times;</button>
-          </div>
-          <div id="panel-content"></div>
-        </div>
-      </aside>
-    </main>
-  </div>
-
-  <script type="module" src="/dist/app.js"></script>
+<body class="bg-gray-900 text-gray-100">
+  <div id="root"></div>
+  <script type="module" src="./main.tsx"></script>
 </body>
 </html>
