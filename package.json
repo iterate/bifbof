@@ -1,24 +1,22 @@
 {
-  "name": "biffboff",
+  "name": "bifbof",
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "biffboff": "./dist/cli.js"
+    "bifbof": "./src/cli.ts"
   },
-  "files": ["src/", "public/", "dist/"],
+  "files": [
+    "src",
+    "public"
+  ],
   "exports": {
     ".": "./src/types.ts"
   },
-  "scripts": {
-    "build": "bun build src/cli.ts --outdir=dist --target=bun",
-    "start": "bun dist/cli.js",
-    "dev": "bun run build && bun run start",
-    "test": "bun test"
-  },
-  "dependencies": {
-    "elysia": "^1.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "bun-types": "latest"
+  },
+  "scripts": {
+    "start": "bun src/cli.ts"
   }
 }

@@ -1,5 +1,6 @@
 ---
-title: Password reset flow
+title: Password reset flows
+id: 123
 status: todo
 priority: medium
 depends:

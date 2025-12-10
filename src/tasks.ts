@@ -2,13 +2,13 @@ import { watch } from "fs";
 import { readdir } from "fs/promises";
 import { join, relative } from "path";
 import { parseTask } from "./parser";
-import type { Task, BiffboffConfig } from "./types";
+import type { Task, BifbofConfig } from "./types";
 
 export class TaskStore {
   private tasks = new Map<string, Task>();
   private listeners = new Set<(tasks: Task[]) => void>();
 
-  constructor(private config: BiffboffConfig) {}
+  constructor(private config: BifbofConfig) {}
 
   async load(): Promise<void> {
     this.tasks.clear();

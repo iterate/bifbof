@@ -20,10 +20,10 @@ if (values.version) {
 
 if (values.help) {
   console.log(`
-biffboff - Git-first task management
+bifbof - Git-first task management
 
 Usage:
-  biffboff [options]
+  bifbof [options]
 
 Options:
   -c, --config <path>  Path to config file
@@ -31,9 +31,9 @@ Options:
   -v, --version        Show version
 
 Config:
-  Create biffboff.config.ts in your project root:
+  Create bifbof.config.ts in your project root:
 
-  import { defineConfig } from "biffboff";
+  import { defineConfig } from "bifbof";
   export default defineConfig({
     tasksDir: "./tasks",
     port: 3456,

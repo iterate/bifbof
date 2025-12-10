@@ -1,4 +1,4 @@
-export interface BiffboffConfig {
+export interface BifbofConfig {
   tasksDir: string;
   port: number;
   columns: string[];
@@ -12,7 +12,7 @@ export interface Task {
   status: string;
 }
 
-export function defineConfig(config: Partial<BiffboffConfig>): BiffboffConfig {
+export function defineConfig(config: Partial<BifbofConfig>): BifbofConfig {
   return {
     tasksDir: "./tasks",
     port: 3456,

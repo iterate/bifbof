@@ -1,7 +1,7 @@
 import { resolve, join } from "path";
-import { defineConfig, type BiffboffConfig } from "./types";
+import { defineConfig, type BifbofConfig } from "./types";
 
-const CONFIG_FILES = ["biffboff.config.ts", "biffboff.config.js"] as const;
+const CONFIG_FILES = ["bifbof.config.ts", "bifbof.config.js"] as const;
 
 async function findConfig(cwd: string): Promise<string | null> {
   for (const filename of CONFIG_FILES) {
@@ -11,7 +11,7 @@ async function findConfig(cwd: string): Promise<string | null> {
   return null;
 }
 
-export async function loadConfig(customPath?: string): Promise<BiffboffConfig> {
+export async function loadConfig(customPath?: string): Promise<BifbofConfig> {
   const cwd = process.cwd();
 
   const configPath = customPath
